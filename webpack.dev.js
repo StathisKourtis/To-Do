@@ -12,6 +12,9 @@
    devServer: {
 
      static: './dist',
+     open: true,       // opens browser automatically
+    hot: true,        // enables hot module replacement
+    // watchFiles: ['src/**/*'],
 
    },
 
