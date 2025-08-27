@@ -2,34 +2,30 @@ import { Project } from "./projectCreator.js";
 
 import { toDoManager } from "./toDoManager.js";
 
-
-
 export const projectManager = {
-    projects : [],
+  projects: [],
 
-    getProjects(){
-        return this.projects
-    },
-    addProject(title,desc,isFinished,dueDate){
-        const newProject = new Project(title,desc,isFinished,dueDate)
-        this.projects.push(newProject)
-    },
-    deleteProject(project){
-        let i = projects.indexOf(project)
-        this.projects.splice(i,1)
-    },
-    markProjectComplete(project){
-        project.isFinished = true
-    },
-    markProjectNotComplete(project){
-        project.isFinished = false
-    },
-    changeProjectDetails(){},
-    getProject(title){
-       return this.projects.find((project) => project.title == title)
-    },
-
-
-
-}
-
+  getProjects() {
+    return this.projects;
+  },
+  addProject(title, desc, isFinished, dueDate) {
+    const newProject = new Project(title, desc, isFinished, dueDate);
+    this.projects.push(newProject);
+  },
+  deleteProject(projectTitle) {
+    let i = this.projects.indexOf(
+      this.getProject(projectTitle)
+    );
+    this.projects.splice(i, 1);
+  },
+  markProjectComplete(projectTitle) {
+    this.getProject(projectTitle).isFinished = true;
+  },
+  markProjectNotComplete(projectTitle) {
+    this.getProject(projectTitle).isFinished = false;
+  },
+  changeProjectDetails() {},
+  getProject(projectTitle) {
+    return this.projects.find((project) => project.title == projectTitle);
+  },
+};
