@@ -1,14 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-<div class="bg-amber-300">aaaa</div>
-<div>aaaa</div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ToDo</title>
+  </head>
+  <body class="bg-main h-screen p-5 overflow-hidden">
+    <!-- grid now matches screen height -->
+    <div class="grid grid-cols-[1fr_3fr] h-full gap-5 p-5">
+      <!-- Project Section -->
+      <div
+        class="p-4 bg-third border-2 flex flex-col rounded-4xl overflow-hidden min-w-[190px]"
+      >
+        <div class="flex mb-3">
+          <div class="text-secondary text-2xl font-bold">Projects</div>
+          <svg
+            id="sortBtn"
+            class="ml-2 mt-2 cursor-pointer"
+            width="20px"
+            height="20px"
+            viewBox="0 0 16 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M8 0L2 6V7H14V6L8 0Z" fill="#EEEEEE" />
+            <path d="M8 16L2 10V9H14V10L8 16Z" fill="#EEEEEE" />
+          </svg>
+        </div>
 
+        <!-- Project Container -->
+        <div
+          id="projectContainer"
+          class="flex flex-col gap-3 overflow-y-auto flex-1 pr-2"
+        ></div>
+        <!-- Project Container -->
 
+        <!-- Add Project Button -->
+        <div class="mt-3 cursor-pointer flex justify-end">
+          <svg
+            id="addProjectBtn"
+            width="40px"
+            height="40"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9V11H9C8.44772 11 8 11.4477 8 12C8 12.5523 8.44772 13 9 13H11V15C11 15.5523 11.4477 16 12 16C12.5523 16 13 15.5523 13 15V13H15C15.5523 13 16 12.5523 16 12C16 11.4477 15.5523 11 15 11H13V9ZM7.25007 2.38782C8.54878 2.0992 10.1243 2 12 2C13.8757 2 15.4512 2.0992 16.7499 2.38782C18.06 2.67897 19.1488 3.176 19.9864 4.01358C20.824 4.85116 21.321 5.94002 21.6122 7.25007C21.9008 8.54878 22 10.1243 22 12C22 13.8757 21.9008 15.4512 21.6122 16.7499C21.321 18.06 20.824 19.1488 19.9864 19.9864C19.1488 20.824 18.06 21.321 16.7499 21.6122C15.4512 21.9008 13.8757 22 12 22C10.1243 22 8.54878 21.9008 7.25007 21.6122C5.94002 21.321 4.85116 20.824 4.01358 19.9864C3.176 19.1488 2.67897 18.06 2.38782 16.7499C2.0992 15.4512 2 13.8757 2 12C2 10.1243 2.0992 8.54878 2.38782 7.25007C2.67897 5.94002 3.176 4.85116 4.01358 4.01358C4.85116 3.176 5.94002 2.67897 7.25007 2.38782Z"
+              fill="#EEEEEE"
+            />
+          </svg>
+        </div>
+      </div>
 
+      <!-- Todo Section -->
+      <div
+        class="p-4 bg-third border-2 rounded-4xl flex flex-col overflow-hidden"
+      >
+        <div class="text-secondary text-2xl font-bold mb-5">ToDos</div>
+        <div id="toDoContainer" class="flex-1 overflow-y-auto pr-2">
+          <!-- To Do Sample -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Project Modal -->
+    <dialog
+      class="bg-main text-secondary rounded-2xl p-3 absolute self-center justify-self-center"
+      id="sortModal"
+    >
+      <div class="flex flex-col place-items-start gap-4">
+        <button
+          id="sortAlphabeticallyBtn"
+          class="bg-third p-2 rounded-2xl cursor-pointer"
+        >
+          Sort Alphabetically
+        </button>
+        <button
+          id="sortAlphabeticallyReverseBtn"
+          class="bg-third p-2 rounded-2xl cursor-pointer"
+        >
+          Sort Alphabetically (Reverse)
+        </button>
+        <button
+          id="sortByDueDateBtn"
+          class="bg-third p-2 rounded-2xl cursor-pointer"
+        >
+          Sort by Due Date
+        </button>
+        <button
+          id="sortByDueDateReverseBtn"
+          class="bg-third p-2 rounded-2xl cursor-pointer"
+        >
+          Sort by Due Date (Reverse)
+        </button>
+      </div>
+    </dialog>
+    <dialog
+      id="addProjectModal"
+      class="bg-main text-secondary rounded-2xl p-3 absolute self-center justify-self-center"
+    >
+      <div class="flex flex-col gap-3">
+        <div class="font-bold">Add Project</div>
+        <form action="" class="flex flex-col gap-3" id="addProjectForm">
+          <div class="flex gap-3">
+            <div>Title</div>
+            <input
+              required
+              maxlength="12"
+              class="bg-secondary/30 rounded-2xl"
+              type="text"
+              id="projectTitle"
+            />
+          </div>
+          <div class="flex gap-3">
+            <div>Description</div>
+            <input
+              required
+              maxlength="30"
+              class="bg-secondary/30 rounded-2xl"
+              type="text"
+              id="projectDesc"
+            />
+          </div>
+          <div class="flex gap-3">
+            <div>Due Date</div>
+            <input required type="date" id="projectDueDate" />
+          </div>
+          <button
+            class="font-bold bg-secondary/60 text-main rounded-2xl cursor-pointer"
+            id="ConfirmAddProjectBtn"
+            type="submit"
+          >
+            Confirm
+          </button>
+          <div id="errorSpace" class="text-accent"></div>
+        </form>
+      </div>
+    </dialog>
+  </body>
 </html>

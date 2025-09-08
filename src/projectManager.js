@@ -4,11 +4,20 @@ import { toDoManager } from "./toDoManager.js";
 
 export const projectManager = {
   projects: [],
+  errors: [],
 
   getProjects() {
     return this.projects;
   },
+  getErrors(){
+    return this.errors;
+  },
   addProject(title, desc, isFinished, dueDate) {
+    this.errors = []
+    if (this.newProjectValidation(title)) {
+      this.errors.push("A project with that name already exists!")
+      return
+    }
     const newProject = new Project(title, desc, isFinished, dueDate);
     this.projects.push(newProject);
   },
@@ -27,5 +36,8 @@ export const projectManager = {
   changeProjectDetails() {},
   getProject(projectTitle) {
     return this.projects.find((project) => project.title == projectTitle);
+  },
+  newProjectValidation(newProjectTitle){
+    return this.projects.some((project) => project.title == newProjectTitle)
   },
 };
