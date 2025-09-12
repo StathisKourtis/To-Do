@@ -1,6 +1,13 @@
 export const sorter = {
-  sortAlphabetically(projects) {
-    projects.sort((a, b) => {
+  array: [],
+  setSortArray(arrayToSort) {
+    this.array = arrayToSort;
+  },
+  getSortArray() {
+    return this.array;
+  },
+  sortAlphabetically() {
+    this.array.sort((a, b) => {
       if (a.title < b.title) {
         return -1;
       }
@@ -10,8 +17,8 @@ export const sorter = {
       return 0;
     });
   },
-  sortAlphabeticallyReverse(projects) {
-    projects.sort((a, b) => {
+  sortAlphabeticallyReverse() {
+    this.array.sort((a, b) => {
       if (a.title < b.title) {
         return 1;
       }
@@ -21,6 +28,32 @@ export const sorter = {
       return 0;
     });
   },
-  sortByDueDate() {},
-  sortByDueDateReverse() {},
+  sortByDueDate() {
+    this.array.sort((a, b) => {
+      const dateA = new Date(a.dueDate);
+      const dateB = new Date(b.dueDate);
+
+      if (dateA < dateB) {
+        return -1;
+      }
+      if (dateA > dateB) {
+        return 1;
+      }
+      return 0;
+    });
+  },
+  sortByDueDateReverse() {
+    this.array.sort((a, b) => {
+      const dateA = new Date(a.dueDate);
+      const dateB = new Date(b.dueDate);
+
+      if (dateA < dateB) {
+        return 1;
+      }
+      if (dateA > dateB) {
+        return -1;
+      }
+      return 0;
+    });
+  },
 };

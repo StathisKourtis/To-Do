@@ -2,6 +2,10 @@ import { ToDo } from "./todoCreator.js";
 
 export const toDoManager = {
   toDos: [],
+  errors: [],
+  getErrors() {
+    return this.errors;
+  },
   getToDo(toDoTitle) {
     return this.toDos.find((toDo) => toDo.title == toDoTitle);
   },
@@ -14,6 +18,11 @@ export const toDoManager = {
   },
 
   addToDo(title, desc, isFinished, dueDate, importance, projectOwner) {
+    this.errors = [];
+    if (this.newToDoValidation(title, projectOwner)) {
+      this.errors.push("A To Do with that name already exists!");
+      return;
+    }
     const newToDo = new ToDo(
       title,
       desc,
@@ -25,9 +34,7 @@ export const toDoManager = {
     this.toDos.push(newToDo);
   },
   deleteToDo(toDoTitle) {
-    let i = this.toDos.indexOf(
-      this.getToDo(toDoTitle)
-    );
+    let i = this.toDos.indexOf(this.getToDo(toDoTitle));
     this.toDos.splice(i, 1);
   },
   markToDoComplete(toDoTitle) {
@@ -38,7 +45,10 @@ export const toDoManager = {
   },
   changeToDoDetails() {},
   transfereToDo(toDoTitle, newOwnerTitle) {
-    this.getToDo(toDoTitle).projectOwner =
-      newOwnerTitle;
+    this.getToDo(toDoTitle).projectOwner = newOwnerTitle;
+  },
+  newToDoValidation(newToDoTitle, projectOwnerTitle) {
+    const toDoList = this.getToDoListByProjectTitle(projectOwnerTitle);
+    return toDoList.some((toDo) => toDo.title == newToDoTitle);
   },
 };
