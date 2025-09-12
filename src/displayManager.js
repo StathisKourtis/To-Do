@@ -2,7 +2,7 @@ import { projectManager } from "./projectManager.js";
 import { toDoManager } from "./toDoManager.js";
 import { sorter } from "./sorter.js";
 import { projectCardManager } from "./projectCard.js";
-import { getToDoCard } from "./toDoCard.js";
+import { toDoCardManager } from "./toDoCard.js";
 
 // init for testing
 
@@ -448,7 +448,6 @@ export const displayManager = {
       console.log(toDoManager.getToDos());
     });
   },
-  getToDoCard() {},
   renderProjects(projects) {
     const container = document.getElementById("projectContainer");
     this.clearContainer(container);
@@ -490,7 +489,17 @@ export const displayManager = {
       const toDoData = toDos[i];
       const toDo = document.createElement("div");
       container.appendChild(toDo);
-      toDo.innerHTML = getToDoCard(toDos[i]);
+      if (toDoData.isFinished == true) {
+        toDo.innerHTML = toDoCardManager.getFinishedToDoCard(toDoData);
+        const finishedToDo = (toDo.querySelector(
+          ".finishedToDo"
+        ).checked = true);
+      } else {
+        toDo.innerHTML = toDoCardManager.getToDoCard(toDoData);
+        const finishedToDo = (toDo.querySelector(
+          ".finishedToDo"
+        ).checked = false);
+      }
       // Delete To Do Button
       const deleteToDo = toDo.querySelector(".deleteToDo");
       deleteToDo.addEventListener("click", () => {
@@ -500,11 +509,27 @@ export const displayManager = {
         );
         console.log("delete!");
       });
+      // Click To Do to expand
       toDo.addEventListener("click", () => {
         if (toDo.querySelector(".toDoDesc").hasAttribute("hidden")) {
           toDo.querySelector(".toDoDesc").removeAttribute("hidden");
         } else {
           toDo.querySelector(".toDoDesc").setAttribute("hidden", "");
+        }
+      });
+      // Mark To Do finished
+      const finishedToDo = toDo.querySelector(".finishedToDo");
+      finishedToDo.addEventListener("input", () => {
+        if (toDoData.isFinished == false) {
+          toDoManager.markToDoComplete(toDoData.title);
+          this.renderToDos(
+            toDoManager.getToDoListByProjectTitle(toDoData.projectOwner)
+          );
+        } else {
+          toDoManager.markToDoNotComplete(toDoData.title);
+          this.renderToDos(
+            toDoManager.getToDoListByProjectTitle(toDoData.projectOwner)
+          );
         }
       });
     }
