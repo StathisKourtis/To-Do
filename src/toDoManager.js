@@ -43,6 +43,12 @@ export const toDoManager = {
   markToDoNotComplete(toDoTitle) {
     this.getToDo(toDoTitle).isFinished = false;
   },
+  updateToDosOwner(oldProjectOwner, newProjectOwner) {
+    let updatedToDos = this.getToDoListByProjectTitle(projectOwner);
+    for (let i = 0; i < toDos.length; i++) {
+      updatedToDos[i].title = projectOwner;
+    }
+  },
   changeToDoDetails() {},
   transfereToDo(toDoTitle, newOwnerTitle) {
     this.getToDo(toDoTitle).projectOwner = newOwnerTitle;

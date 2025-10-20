@@ -8,7 +8,8 @@ export const projectCardManager = {
           <div class="font-semibold">${project.title}</div>
           <div class="flex gap-1 items-center">
             <svg
-              class=""
+              
+              class="editBtn"
               width="18px"
               height="18px"
               viewBox="0 0 16 16"
@@ -57,7 +58,7 @@ export const projectCardManager = {
           <div class="font-semibold">${project.title}</div>
           <div class="flex items-center gap-1">
             <svg
-              class=""
+              class="editBtn"
               width="18px"
               height="18px"
               viewBox="0 0 16 16"

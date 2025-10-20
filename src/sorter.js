@@ -1,10 +1,15 @@
 export const sorter = {
   array: [],
-  setSortArray(arrayToSort) {
+  arrayType: "",
+  setSortArray(arrayToSort, arrayType) {
     this.array = arrayToSort;
+    this.arrayType = arrayType;
   },
   getSortArray() {
     return this.array;
+  },
+  getSortType() {
+    return this.arrayType;
   },
   sortAlphabetically() {
     this.array.sort((a, b) => {

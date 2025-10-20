@@ -6,6 +6,13 @@ export const projectManager = {
   projects: [],
   errors: [],
   selectedProject: "",
+  projectUnderChange: "",
+  setProjectUnderChange(project) {
+    this.projectUnderChange = project;
+  },
+  getProjectUnderChange() {
+    return this.projectUnderChange;
+  },
   getSelectedProject() {
     return this.selectedProject;
   },
@@ -38,7 +45,15 @@ export const projectManager = {
   markProjectNotComplete(projectTitle) {
     this.getProject(projectTitle).isFinished = false;
   },
-  changeProjectDetails() {},
+  changeProjectDetails(project, title, desc, dueDate) {
+    let index = this.projects.findIndex(
+      (instance) => instance.title == project.title
+    );
+    this.projects[index].title = title;
+    this.projects[index].desc = desc;
+    this.projects[index].dueDate = dueDate;
+    console.log(this.projects);
+  },
   getProject(projectTitle) {
     return this.projects.find((project) => project.title == projectTitle);
   },

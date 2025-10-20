@@ -230,6 +230,48 @@
         </form>
       </div>
     </dialog>
+    <!-- Edit Project Modal -->
+    <dialog
+      id="editProjectModal"
+      class="bg-main text-secondary rounded-2xl p-3 absolute self-center justify-self-center"
+    >
+      <div class="flex flex-col gap-3">
+        <div class="font-bold">Edit Project</div>
+        <form action="" class="flex flex-col gap-3" id="editProjectForm">
+          <div class="flex gap-3">
+            <div>Title</div>
+            <input
+              required
+              maxlength="12"
+              class="bg-secondary/30 rounded-2xl"
+              type="text"
+              id="editProjectTitle"
+            />
+          </div>
+          <div class="flex gap-3">
+            <div>Description</div>
+            <input
+              required
+              class="bg-secondary/30 rounded-2xl"
+              type="text"
+              id="editProjectDesc"
+            />
+          </div>
+          <div class="flex gap-3">
+            <div>Due Date</div>
+            <input required type="date" id="editProjectDueDate" />
+          </div>
+          <button
+            class="font-bold bg-secondary/60 text-main rounded-2xl cursor-pointer"
+            id="ConfirmEditProjectBtn"
+            type="submit"
+          >
+            Confirm
+          </button>
+          <div id="editProjectErrorSpace" class="text-accent"></div>
+        </form>
+      </div>
+    </dialog>
     <div id="footer" class="text-secondary text-center">
       Stathis Kourtis 2025 &copy; The Odin Project
     </div>

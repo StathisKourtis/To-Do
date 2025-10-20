@@ -358,7 +358,7 @@ export const displayManager = {
     const sortBtn = document.getElementById("sortBtn");
     sortBtn.addEventListener("click", () => {
       const sortModal = document.getElementById("sortModal");
-      sorter.setSortArray(projectManager.getProjects());
+      sorter.setSortArray(projectManager.getProjects(), "projects");
       sortModal.showModal();
     });
     const sortToDosBtn = document.getElementById("sortToDosBtn");
@@ -367,7 +367,8 @@ export const displayManager = {
       sorter.setSortArray(
         toDoManager.getToDoListByProjectTitle(
           projectManager.getSelectedProject().title
-        )
+        ),
+        "toDos"
       );
       sortModal.showModal();
     });
@@ -377,9 +378,14 @@ export const displayManager = {
     sortAlphabeticallyBtn.addEventListener("click", () => {
       const sortModal = document.getElementById("sortModal");
       sorter.sortAlphabetically();
-      this.renderProjects(projectManager.getProjects());
-      this.renderToDos(sorter.getSortArray());
-      console.log(sorter.getSortArray());
+      switch (sorter.getSortType()) {
+        case "projects":
+          this.renderProjects(projectManager.getProjects());
+          break;
+        case "toDos":
+          this.renderToDos(sorter.getSortArray());
+          break;
+      }
       sortModal.close();
     });
     const sortAlphabeticallyReverseBtn = document.getElementById(
@@ -388,15 +394,27 @@ export const displayManager = {
     sortAlphabeticallyReverseBtn.addEventListener("click", () => {
       const sortModal = document.getElementById("sortModal");
       sorter.sortAlphabeticallyReverse();
-      this.renderProjects(projectManager.getProjects());
-      this.renderToDos(sorter.getSortArray());
+      switch (sorter.getSortType()) {
+        case "projects":
+          this.renderProjects(projectManager.getProjects());
+          break;
+        case "toDos":
+          this.renderToDos(sorter.getSortArray());
+          break;
+      }
       sortModal.close();
     });
     const sortByDueDateBtn = document.getElementById("sortByDueDateBtn");
     sortByDueDateBtn.addEventListener("click", () => {
       sorter.sortByDueDate();
-      this.renderProjects(projectManager.getProjects());
-      this.renderToDos(sorter.getSortArray());
+      switch (sorter.getSortType()) {
+        case "projects":
+          this.renderProjects(projectManager.getProjects());
+          break;
+        case "toDos":
+          this.renderToDos(sorter.getSortArray());
+          break;
+      }
       sortModal.close();
     });
     const sortByDueDateReverseBtn = document.getElementById(
@@ -404,8 +422,14 @@ export const displayManager = {
     );
     sortByDueDateReverseBtn.addEventListener("click", () => {
       sorter.sortByDueDateReverse();
-      this.renderProjects(projectManager.getProjects());
-      this.renderToDos(sorter.getSortArray());
+      switch (sorter.getSortType()) {
+        case "projects":
+          this.renderProjects(projectManager.getProjects());
+          break;
+        case "toDos":
+          this.renderToDos(sorter.getSortArray());
+          break;
+      }
       sortModal.close();
     });
     // Add To Do Button
@@ -447,6 +471,19 @@ export const displayManager = {
       console.log("confirm");
       console.log(toDoManager.getToDos());
     });
+    // Confirm edit project Form
+    const editProjectForm = document.getElementById("editProjectForm");
+    editProjectForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      projectManager.changeProjectDetails(
+        projectManager.getProjectUnderChange(),
+        document.getElementById("editProjectTitle").value,
+        document.getElementById("editProjectDesc").value,
+        document.getElementById("editProjectDueDate").value
+      );
+      this.renderProjects(projectManager.getProjects());
+      document.getElementById("editProjectModal").close();
+    });
   },
   renderProjects(projects) {
     const container = document.getElementById("projectContainer");
@@ -478,6 +515,13 @@ export const displayManager = {
         projectManager.deleteProject(projectData.title);
         this.renderProjects(projectManager.getProjects());
         this.clearContainer(document.getElementById("toDoContainer"));
+      });
+      // Project Edit Button
+      const editBtn = project.querySelector(".editBtn");
+      editBtn.addEventListener("click", () => {
+        document.getElementById("editProjectModal").showModal();
+        this.populateEditProjectModal(projectData);
+        projectManager.setProjectUnderChange(projectData);
       });
     }
   },
@@ -547,6 +591,11 @@ export const displayManager = {
     document.getElementById("toDoDesc").value = "";
     document.getElementById("toDoDueDate").value = "";
     document.getElementById("importanceSelection").value = "";
+  },
+  populateEditProjectModal(project) {
+    document.getElementById("editProjectTitle").value = project.title;
+    document.getElementById("editProjectDesc").value = project.desc;
+    document.getElementById("editProjectDueDate").value = project.dueDate;
   },
 };
 
